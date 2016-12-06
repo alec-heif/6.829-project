@@ -4,7 +4,15 @@ var path = require('path');
 
 var curriedResponse = function(size) {
   return function(req, res) {
-    var options = { root: __dirname, lastModified: false, cacheControl: false};
+    var options = { 
+      root: __dirname, 
+      lastModified: false, 
+      cacheControl: false,
+      headers: {
+        'Transfer-Encoding': 'identity',
+        'Content-Encoding': 'identity'
+      }
+    };
     res.sendFile(size + 'kb.dat', options, function (err) {
       if (err) {
         console.log(err);
