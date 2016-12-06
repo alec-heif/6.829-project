@@ -4,7 +4,7 @@ var path = require('path');
 
 app.get('/', function (req, res) {
   var options = { root: __dirname, lastModified: false, cacheControl: false};
-  res.sendFile('garbage.dat', options, function (err) {
+  res.sendFile('1024kb.dat', options, function (err) {
     if (err) {
       console.log(err);
     } else {
