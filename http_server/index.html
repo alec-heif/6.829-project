@@ -1,11 +1,18 @@
 <html>
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
 <body>
+
     <p>Hello World!</p>
-    <button onclick="testFunction()">Test</button>
-    <script type="text/javascript">
-      function testFunction() {
-        alert('Yolo');
-      }
-    </script>
+    <button onclick="downloadAll()">Download All</button>
+    <button onclick="singleDownload(16)">16K download</button>
+    <button onclick="singleDownload(64)">64K download</button>
+    <button onclick="singleDownload(256)">256K download</button>
+    <button onclick="singleDownload(1024)">1024K download</button>
+
+    <script type="text/javascript" src="fileTest.js"></script>
+
 </body>
 </html>
