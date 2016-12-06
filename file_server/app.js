@@ -22,7 +22,8 @@ var curriedResponse = function(size) {
       headers: {
         'Transfer-Encoding': 'identity',
         'Content-Encoding': 'identity',
-        'Content-Length': sizeOctets
+        'Content-Length': sizeOctets,
+        'Access-Control-Allow-Origin': '*'
       }
     };
     res.sendFile(size + 'kb.dat', options, function (err) {
