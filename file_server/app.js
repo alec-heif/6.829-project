@@ -20,6 +20,6 @@ app.get('/64', curriedResponse('64'));
 app.get('/256', curriedResponse('256'));
 app.get('/1024', curriedResponse('1024'));
 
-app.listen(8080, function() {
-  console.log('Example app listening on port 8080!');
+app.listen(3000, function() {
+  console.log('File server listening on port 3000');
 });
