@@ -3,14 +3,26 @@ var app = express();
 var path = require('path');
 
 var curriedResponse = function(size) {
+  sizeOctets = 0;
+  switch(size) {
+    case '16':
+      sizeOctets = 2048;
+    case '64':
+      sizeOctets = 8192;
+    case '256':
+      sizeOctets = 32768;
+    case '1024':
+      sizeOctets = 131072;
+  }
   return function(req, res) {
-    var options = { 
-      root: __dirname, 
-      lastModified: false, 
+    var options = {
+      root: __dirname,
+      lastModified: false,
       cacheControl: false,
       headers: {
         'Transfer-Encoding': 'identity',
-        'Content-Encoding': 'identity'
+        'Content-Encoding': 'identity',
+        'Content-Length': sizeOctets
       }
     };
     res.sendFile(size + 'kb.dat', options, function (err) {
