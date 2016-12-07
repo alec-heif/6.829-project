@@ -3,13 +3,12 @@ var app = express();
 var path = require('path');
 
 var parseBody = function(req, res, next) {
-  var data = '';
-  req.setEncoding('utf8');
+  var body = [];
   req.on('data', function(chunk) {
-    data += chunk;
+    body.push(chunk);
   });
   req.on('end', function() {
-    req.body = data;
+    req.body = Buffer.concat(body);
     next();
   });
 }
@@ -29,14 +28,7 @@ var handlePost = function(size) {
   }
   return function(req, res) {
     console.log("Received body " + size);
-    console.log(req.body);
-    res.writeHead(200, {
-      'Access-Control-Allow-Origin': '*',
-      'Cache-Control': false,
-      'Content-Length': sizeOctets,
-    });
-    res.write(req.body);
-    res.end();
+    res.send(req.body);
   }
 }
 
