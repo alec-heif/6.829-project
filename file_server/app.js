@@ -23,7 +23,7 @@ var curriedGetResponse = function(size) {
         'Transfer-Encoding': 'identity',
         'Content-Encoding': 'identity',
         'Content-Length': sizeOctets,
-        'Access-Control-Allow-Origin': '*'
+        'Access-Control-Allow-Origin': '*',
       }
     };
     res.sendFile(size + 'kb.dat', options, function (err) {
@@ -38,7 +38,12 @@ var curriedGetResponse = function(size) {
 
 var curriedPostResponse = function(size) {
   return function(req, res) {
-    console.log('Sent file of size ' + size + ' kb!');
+    console.log('Received file of size ' + size + ' kb!');
+    res.writeHead(200, {
+      'Access-Control-Allow-Origin': '*',
+      'Cache-Control': false
+    });
+    res.end();
   }
 }
 
