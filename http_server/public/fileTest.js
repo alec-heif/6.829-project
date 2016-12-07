@@ -51,13 +51,28 @@ function singleUpload(size, cb) {
   });
 }
 
+function logData() {
+  $(function() {
+    $.getJSON("https://api.ipify.org?format=jsonp&callback=?",
+      function(json) {
+        var preface = "Experiment successful! Save the line below somewhere for future analysis.";
+        document.getElementById('preface').innerHTML = preface;
+
+        var ip = json.ip;
+        var paid = $('#paid').prop('checked') ? "paid" : "free";
+        var mobile = $('#mobile').prop('checked') ? "mobile" : "computer";
+        var time = Date.now();
+        var result = time + ", " + ip + ", " + paid + ", " + mobile;
+        document.getElementById('result').innerHTML = result;
+    });
+  });
+}
 function uploadAll() {
   singleUpload(16, function() {
     singleUpload(64, function() {
       singleUpload(256, function() {
         singleUpload(1024, function() {
-          console.log("Done uploading all");
-          alert("Experiment done!");
+          logData();
         });
       });
     });

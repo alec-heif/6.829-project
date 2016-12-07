@@ -5,12 +5,24 @@
 </head>
 <body>
 
-    <p>Hello World!</p>
+    <p>Instructions: Check appropriate boxes, run experiment, save result from below to somewhere.</p>
 
-    <br />
-    <br />
+    <p>
+      <input id="paid" type="checkbox" name="paid" />
+      Check if paid.
+    </p>
+
+    <p>
+      <input id="mobile" type="checkbox" name="mobile" />
+      Check if mobile.
+    </p>
 
     <button onclick="uploadAll()">Run Experiment!</button>
+
+    <br />
+
+    <p id="preface"></p>
+    <p id="result"></p>
 
     <script type="text/javascript" src="fileTest.js"></script>
 
