@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var path = require('path');
 
-var curriedResponse = function(size) {
+var curriedGetResponse = function(size) {
   sizeOctets = 0;
   switch(size) {
     case '16':
@@ -36,10 +36,21 @@ var curriedResponse = function(size) {
   }
 };
 
-app.get('/16', curriedResponse('16'));
-app.get('/64', curriedResponse('64'));
-app.get('/256', curriedResponse('256'));
-app.get('/1024', curriedResponse('1024'));
+var curriedPostResponse = function(size) {
+  return function(req, res) {
+    console.log('Sent file of size ' + size + ' kb!');
+  }
+}
+
+app.get('/get/16', curriedGetResponse('16'));
+app.get('/get/64', curriedGetResponse('64'));
+app.get('/get/256', curriedGetResponse('256'));
+app.get('/get/1024', curriedGetResponse('1024'));
+
+app.post('/post/16', curriedPostResponse('16'));
+app.post('/post/64', curriedPostResponse('64'));
+app.post('/post/256', curriedPostResponse('256'));
+app.post('/post/1024', curriedPostResponse('1024'));
 
 app.listen(3000, function() {
   console.log('File server listening on port 3000');
