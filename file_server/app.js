@@ -2,18 +2,6 @@ var express = require('express');
 var app = express();
 var path = require('path');
 
-var parseBody = function(req, res, next) {
-  var body = [];
-  req.on('data', function(chunk) {
-    body.push(chunk);
-  });
-  req.on('end', function() {
-    req.body = Buffer.concat(body);
-    next();
-  });
-}
-app.use(parseBody);
-
 var handlePost = function(size) {
   sizeOctets = 0;
   switch(size) {
@@ -27,8 +15,16 @@ var handlePost = function(size) {
       sizeOctets = 131072;
   }
   return function(req, res) {
-    console.log("Received body " + size);
-    res.send(req.body);
+    var body = [];
+    req.on('data', function(chunk) {
+      body.push(chunk);
+      console.log("Chunked!");
+    });
+    req.on('end', function() {
+      var realBody = Buffer.concat(body);
+      console.log("Received body " + size);
+      res.send(realBody);
+    });
   }
 }
 
