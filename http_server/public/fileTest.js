@@ -1,17 +1,5 @@
 baseUrl = 'http://23.236.48.150:3000/';
 
-function singleDownload(size) {
-  var url = baseUrl + "get/" + size;
-  var onSuccess = function() {
-    alert('success!');
-  }
-  $.ajax({
-    url: toGet(size),
-    success: onSuccess,
-    cache: false
-  });
-}
-
 function toGet(size) {
   return baseUrl + "get/" + size;
 }
@@ -19,20 +7,23 @@ function toPost(size) {
   return baseUrl + "post/" + size;
 }
 
-function downloadAll() {
-  var sizes = [16, 64, 256, 1024];
-  sizes.forEach(size => {
-    $.ajax({
-      url: toGet(size),
-      cache: false,
-      async: false
-    });
+function downloadHelper(size, cb) {
+  var url = baseUrl + "get/" + size;
+  $.ajax({
+    url: toGet(size),
+    success: cb,
+    cache: false
   });
-  alert('Done!');
 }
 
-function singleUpload(size, cb) {
-  var url = size + "kb.dat";
+function singleDownload(size) {
+  downloadHelper(size, function() {
+    alert("Downloaded file of size " + size + "!");
+  });
+}
+
+function uploadHelper(size, cb) {
+  var localUrl = size + "kb.dat";
   var onSuccess = function(data) {
     $.ajax({
       url: toPost(size),
@@ -43,7 +34,7 @@ function singleUpload(size, cb) {
     });
   };
   $.ajax({
-    url: url,
+    url: localUrl,
     type: 'GET',
     contentType: 'application/octet-stream',
     processData: false,
@@ -51,30 +42,22 @@ function singleUpload(size, cb) {
   });
 }
 
+function singleUpload(size) {
+  uploadHelper(size, function() {
+    alert("Uploaded file of size " + size + "!");
+  })
+}
+
 function logData() {
   $(function() {
     $.getJSON("https://api.ipify.org?format=jsonp&callback=?",
       function(json) {
-        var preface = "Experiment successful! Save the line below somewhere for future analysis.";
-        document.getElementById('preface').innerHTML = preface;
-
         var ip = json.ip;
         var paid = $('#paid').prop('checked') ? "paid" : "free";
         var mobile = $('#mobile').prop('checked') ? "mobile" : "computer";
         var time = Date.now();
         var result = time + ", " + ip + ", " + paid + ", " + mobile;
         document.getElementById('result').innerHTML = result;
-    });
-  });
-}
-function uploadAll() {
-  singleUpload(16, function() {
-    singleUpload(64, function() {
-      singleUpload(256, function() {
-        singleUpload(1024, function() {
-          logData();
-        });
-      });
     });
   });
 }

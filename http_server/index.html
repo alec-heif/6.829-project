@@ -8,23 +8,35 @@
     <p>Instructions: Check appropriate boxes, run experiment, save result from below to somewhere.</p>
 
     <p>
-      <input id="paid" type="checkbox" name="paid" />
+      <input id="paid" type="checkbox" name="paid" onclick="logData()"/>
       Check if paid.
     </p>
 
     <p>
-      <input id="mobile" type="checkbox" name="mobile" />
+      <input id="mobile" type="checkbox" name="mobile" onclick="logData()"/>
       Check if mobile.
     </p>
 
-    <button onclick="uploadAll()">Run Experiment!</button>
+    <button onclick="singleDownload(16)">16K download</button>
+    <button onclick="singleDownload(64)">64K download</button>
+    <button onclick="singleDownload(256)">256K download</button>
+    <button onclick="singleDownload(1024)">1024K download</button>
 
     <br />
 
-    <p id="preface"></p>
-    <p id="result"></p>
+    <button onclick="singleUpload(16)">16K upload</button>
+    <button onclick="singleUpload(64)">64K upload</button>
+    <button onclick="singleUpload(256)">256K upload</button>
+    <button onclick="singleUpload(1024)">1024K upload</button>
+
+    <br />
+
+    <p id="result" style="text-align:center"></p>
 
     <script type="text/javascript" src="fileTest.js"></script>
+    <script type="text/javascript">
+      logData()
+    </script>
 
 </body>
 </html>
