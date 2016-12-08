@@ -37,6 +37,9 @@ var curriedGetResponse = function(size) {
 var handlePost = function(req, res) {
   var body = [];
   var length= 0;
+  req.on('data', function() {
+    // do nothing...
+  });
   req.on('end', function() {
     res.set('Access-Control-Allow-Origin', '*');
     res.status(200);
